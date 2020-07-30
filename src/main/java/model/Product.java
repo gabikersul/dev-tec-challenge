@@ -6,7 +6,6 @@ public class Product {
     private String id;
     private Integer quantity;
     private Double price;
-    private Double productTotalPrice;
 
     public Product(String id, Integer quantity, Double price) {
         this.id = id;

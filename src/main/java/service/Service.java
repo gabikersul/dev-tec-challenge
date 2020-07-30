@@ -41,12 +41,6 @@ public class Service {
     }
 
     public String getBestSaleID(List<Sale> sales){ //todo: pegar o id da melhor venda - só consigo pegar a melhor venda no metodo de cima
-        sales.stream()
-                .mapToDouble(sale -> sale.getProductList()
-                        .stream()
-                        .mapToDouble(product -> product.getQuantity() * product.getPrice())
-                        .sum())
-                .max();
         return null;
     }
 
@@ -62,11 +56,16 @@ public class Service {
                 .min();
     }
 
-    public Report createReport(List<Client> clients, List<Salesperson> salespeople, Salesperson worstSalesperson){
+
+    public Report createReport(List<Client> clients, List<Salesperson> salespeople, List<Sale> sales, Salesperson worstSalesperson){
         Integer quantityOfClients = calculateQuantityOfClients(clients);
         Integer quantityOfSalespeople = calculateQuantityOfSalespeople(salespeople);
-        String  bestSaleID = "1";
+        List<Sale> sals = sales;
+        Collections.sort(sals, Sale::compareTo);
+        String bestSaleID = sals.get(0).getSaleID();
 
+
+        System.out.println("BEST SALEEEE "+bestSaleID);
         return new Report(quantityOfClients, quantityOfSalespeople, bestSaleID, worstSalesperson);
     }
 

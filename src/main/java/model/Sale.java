@@ -2,7 +2,8 @@ package model;
 
 import java.util.List;
 
-public class Sale {
+
+public class Sale implements Comparable<Sale> {
 
     private String identifier;
     private String saleID;
@@ -60,5 +61,18 @@ public class Sale {
                 ", productList=" + productList +
                 ", salespersonName='" + salespersonName + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Sale sale) {
+        double thisTotal = this.productList.stream().mapToDouble(Product::getProductTotalPrice).sum();
+        double otherTotal = sale.getProductList().stream().mapToDouble(Product::getProductTotalPrice).sum();
+        if (thisTotal > otherTotal) {
+            return -1;
+        }
+        else if (thisTotal < otherTotal) {
+            return 1;
+        }
+        return 0;
     }
 }

@@ -1,3 +1,4 @@
+import DAO.FileInDAO;
 import DAO.ReportDAO;
 import model.*;
 import service.Service;
@@ -6,74 +7,78 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        ReportDAO reportDAO = new ReportDAO();
-        Report report = new Report();
         Service service = new Service();
+        FileInDAO fileInDAO = new FileInDAO();
 
-        Files.walk(Paths.get("./data/in"))
-                .filter(Files::isRegularFile)
-                .forEach(file -> {
-                    List<String> lines = new ArrayList<>();
-                    try {
-                        lines = Files.readAllLines(Paths.get(file.getParent()+"/"+file.getFileName()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    List<Salesperson> salespeople = new ArrayList<>();
-                    List<Client> clients = new ArrayList<>();
-                    List<Sale> sales = new ArrayList<>();
-                    List<Product> products = new ArrayList<>();
+        fileInDAO.readFolder().forEach(file -> {
+            List<String> lines = fileInDAO.readAllLines(file.getFileName());
+            Pattern pattern = Pattern.compile("(\\d{3})ç(\\d+)ç(.+)ç(\\S+)");
 
-                    for (String line: lines) {
-                        if (line.startsWith("001")) {
-                            String[] dataLine = line.split("ç");
-                            Salesperson salesperson = new Salesperson(dataLine[0], dataLine[1], dataLine[2], Double.parseDouble(dataLine[3]));
-                            salespeople.add(salesperson);
-                            System.out.println(salespeople);
-                        }
-                        else if (line.startsWith("002")) {
-                            String[] dataLine = line.split("ç");
-                            Client client = new Client(dataLine[0], dataLine[1], dataLine[2], dataLine[3]);
-                            clients.add(client);
-                            System.out.println(clients);
-                        }
-                        else if (line.startsWith("003")) {
-                            String[] dataLine = line.split("ç");
-                            Sale sale = new Sale(dataLine[0], dataLine[1], dataLine[3]);
-                            String[] propertyProducto = dataLine[2].replace("[", "").split("]");
-                            for (String aaa: propertyProducto) {
-                                String[] aaabbb = aaa.split(",");
-                                for (String a: aaabbb){
-                                    String[] ab = a.split("-");
-                                    Product product = new Product(ab[0], Integer.parseInt(ab[1]), Double.parseDouble(ab[2]));
-                                    products.add(product);
-                                }
-                                sale.setProductList(products);
-                            }
-                            sales.add(sale);
-                            System.out.println(sales);
-                        }
-                        else {
-                            System.out.println("invalid");
-                        }
-                    }
-                    int quantityClients = service.calculateQuantityOfClients(clients);
-                    System.out.println(quantityClients);
-                    int quantitySellers = service.calculateQuantityOfSalespeople(salespeople);
-                    System.out.println(quantitySellers);
+            List<String> salespeopleLine = lines.stream().filter(xline -> xline.startsWith("001")).collect(Collectors.toList());
+            List<String> clientsLine = lines.stream().filter(xline -> xline.startsWith("002")).collect(Collectors.toList());
+            List<String> salesLine = lines.stream().filter(xline -> xline.startsWith("003")).collect(Collectors.toList());
 
-                    Salesperson salesperson = new Salesperson();
-                    report.setQuantityOfSalespeople(quantitySellers);
-                    report.setQuantityOfClients(quantityClients);
+            List<Salesperson> salespeople = new ArrayList<>();
 
-                    Report report1 = new Report();
-                    report1= service.createReport(clients, salespeople,salesperson);
-                    service.saveReport(report1, file);
+            salespeopleLine.forEach(field -> {
+                List<String> dataLine = Stream.of(field)
+                        .map(pattern::matcher)
+                        .filter(Matcher::find)
+                        .flatMap(matcher -> IntStream.rangeClosed(1, matcher.groupCount()).mapToObj(matcher::group))
+                        .collect(Collectors.toList());
+                Salesperson salesperson = new Salesperson(dataLine.get(0), dataLine.get(1),
+                        dataLine.get(2), Double.parseDouble(dataLine.get(3)));
+                salespeople.add(salesperson);
+            });
 
+            List<Client> clients = new ArrayList<>();
+
+            clientsLine.forEach(field -> {
+                List<String> dataLine = Stream.of(field)
+                        .map(pattern::matcher)
+                        .filter(Matcher::find)
+                        .flatMap(matcher -> IntStream.rangeClosed(1, matcher.groupCount()).mapToObj(matcher::group))
+                        .collect(Collectors.toList());
+                Client client = new Client(dataLine.get(0), dataLine.get(1),
+                        dataLine.get(2), dataLine.get(3));
+                clients.add(client);
+            });
+
+            List<Sale> sales = new ArrayList<>();
+
+            salesLine.forEach(field -> {
+                List<String> dataLine = Stream.of(field)
+                        .map(pattern::matcher)
+                        .filter(Matcher::find)
+                        .flatMap(matcher -> IntStream.rangeClosed(1, matcher.groupCount()).mapToObj(matcher::group))
+                        .collect(Collectors.toList());
+                Sale sale = new Sale(dataLine.get(0), dataLine.get(1), dataLine.get(3));
+
+                List<Product> products = new ArrayList<>();
+                String[] productsString = dataLine.get(2).split(",");
+                Arrays.stream(productsString).forEach(string -> {
+                    String[] productField = string.replace("[", "").replace("]", "").split("-");
+                    Product product = new Product(productField[0],
+                            Integer.parseInt(productField[1]), Double.parseDouble(productField[2]));
+                    products.add(product);
                 });
+                sale.setProductList(products);
+                sales.add(sale);
+            });
+            System.out.println(sales);
+            Salesperson salesperson = new Salesperson();
+            Report report = service.createReport(clients, salespeople, sales, salesperson);
+            service.saveReport(report, file);
+        });
     }
 }
