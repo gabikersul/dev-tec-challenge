@@ -28,18 +28,6 @@ public class Service {
         return salespeople.size();
     }
 
-    public OptionalDouble calculatePriceBestSale(List<Sale> sales){
-        if(sales.isEmpty()){
-            throw new IllegalArgumentException("No sale registered.");
-        }
-        return sales.stream()
-                .mapToDouble(sale -> sale.getProductList()
-                        .stream()
-                        .mapToDouble(Product::getProductTotalPrice)
-                        .sum())
-                .max();
-    }
-
     public String getBestSaleID(List<Sale> sales){
         if(sales.isEmpty()){
             throw new IllegalArgumentException("No sale registered.");

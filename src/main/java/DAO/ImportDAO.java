@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FileInDAO {
+public class ImportDAO {
     public List<Path> readFolder() {
         List<Path> paths;
         try {

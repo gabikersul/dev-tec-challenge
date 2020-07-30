@@ -10,9 +10,6 @@ public class Sale implements Comparable<Sale> {
     private List<Product> productList;
     private String salespersonName;
 
-    public Sale(){
-
-    }
 
     public Sale(String identifier, String saleID, String salespersonName) {
         this.identifier = identifier;

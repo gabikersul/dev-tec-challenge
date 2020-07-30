@@ -15,11 +15,10 @@ import java.util.List;
 public class ServiceTest {
 
     private Service service;
-    double delta = 0.0;
 
     @Before
     public void init(){
-        service = new Service();
+        this.service = new Service();
     }
 
     @Test
@@ -36,11 +35,12 @@ public class ServiceTest {
     }
 
     @Test
-    public void shouldGetTheBiggestSalePriceTest(){
-        Sale sale1 = new Sale("003", "1", "Lucas");
+    public void shouldGetBestSaleIDTest(){
         Product product1 = new Product("1", 1, 10.5);
         Product product2 = new Product("2", 1, 20.1);
         Product product3 = new Product("3", 1, 30.1);
+
+        Sale sale1 = new Sale("003", "1", "Lucas");
         List<Product> productList = new ArrayList<>();
         productList.add(product1);
         productList.add(product2);
@@ -60,9 +60,39 @@ public class ServiceTest {
         sales.add(sale1);
         sales.add(sale2);
         sales.add(sale3);
-        service.calculatePriceBestSale(sales);
-        System.out.println(service.calculatePriceBestSale(sales));
-        Assert.assertEquals(30.6,service.calculatePriceBestSale(sales).getAsDouble(), delta);
+
+        Assert.assertEquals("1", service.getBestSaleID(sales));
 
     }
+
+    @Test
+    public void shouldGetWorstSalespersonTest() {
+        Sale sale1 = new Sale("003", "1", "Lucas");
+        Sale sale2 = new Sale("003", "2", "Lucas");
+        Sale sale3 = new Sale("003", "3", "Gabriela");
+        Sale sale4 = new Sale("003", "4", "Renan");
+        Sale sale5 = new Sale("003", "5", "Renan");
+        Sale sale6 = new Sale("003", "6", "Renan");
+
+        List<Sale> sales = new ArrayList<>();
+        sales.add(sale1);
+        sales.add(sale2);
+        sales.add(sale3);
+        sales.add(sale4);
+        sales.add(sale5);
+        sales.add(sale6);
+
+        Salesperson salesperson1 = new Salesperson("001", "111.111.111-11", "Lucas", 4500.0);
+        Salesperson salesperson2 = new Salesperson("001", "111.111.111-12", "Gabriela", 4500.0);
+        Salesperson salesperson3 = new Salesperson("001", "111.111.111-13", "Renan", 4500.0);
+
+        List<Salesperson> salespeople = new ArrayList<>();
+        salespeople.add(salesperson1);
+        salespeople.add(salesperson2);
+        salespeople.add(salesperson3);
+
+        Assert.assertEquals(salesperson2, service.getWorstSalesperson(sales, salespeople));
+    }
+
+
 }

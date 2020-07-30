@@ -9,10 +9,10 @@ import java.io.IOException;
 
 public class ReportDAO {
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final String REPORT_FILE = "./data/out/";
+    private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private final String REPORT_FILE = "./data/out/";
 
-    public static boolean saveReport(Report report, String fileName){
+    public boolean saveReport(Report report, String fileName){
         try(FileWriter writer = new FileWriter(REPORT_FILE + fileName)) {
             GSON.toJson(report, writer);
             return true;

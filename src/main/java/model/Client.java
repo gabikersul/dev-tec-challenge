@@ -7,9 +7,6 @@ public class Client {
     private String name;
     private String businessArea;
 
-    public Client(){
-
-    }
 
     public Client(String identifier, String cnpj, String name, String businessArea){
         this.identifier = identifier;
