@@ -6,7 +6,7 @@ It's a Java + Gradle application that reads files and analysis the data and outp
 ## Execution
 
 - Start the application.
-- You can add more files in %HOMEPATH%/data/in following the com.gabikersul.ilegra.technicalchallenge.model:
+- You can add more files in %HOMEPATH%/data/in following the model:
     - Salesperson id 001:
         - 001çCPFçNameçSalary
         - ex: 001ç1234567891234çPedroç50000
