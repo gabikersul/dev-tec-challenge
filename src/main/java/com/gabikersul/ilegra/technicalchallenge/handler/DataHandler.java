@@ -1,9 +1,9 @@
-package handler;
+package com.gabikersul.ilegra.technicalchallenge.handler;
 
-import model.Client;
-import model.Product;
-import model.Sale;
-import model.Salesperson;
+import com.gabikersul.ilegra.technicalchallenge.model.Client;
+import com.gabikersul.ilegra.technicalchallenge.model.Product;
+import com.gabikersul.ilegra.technicalchallenge.model.Sale;
+import com.gabikersul.ilegra.technicalchallenge.model.Salesperson;
 
 import java.util.ArrayList;
 import java.util.Arrays;

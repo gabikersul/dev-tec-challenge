@@ -1,11 +1,13 @@
-import model.Product;
-import model.Report;
-import model.Sale;
-import model.Salesperson;
+package com.gabikersul.ilegra.technicalchallenge;
+
+import com.gabikersul.ilegra.technicalchallenge.model.Product;
+import com.gabikersul.ilegra.technicalchallenge.model.Report;
+import com.gabikersul.ilegra.technicalchallenge.model.Sale;
+import com.gabikersul.ilegra.technicalchallenge.model.Salesperson;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import service.Service;
+import com.gabikersul.ilegra.technicalchallenge.service.Service;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

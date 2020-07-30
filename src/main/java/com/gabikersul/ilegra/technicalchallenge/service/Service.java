@@ -1,7 +1,7 @@
-package service;
+package com.gabikersul.ilegra.technicalchallenge.service;
 
-import DAO.ReportDAO;
-import model.*;
+import com.gabikersul.ilegra.technicalchallenge.DAO.ReportDAO;
+import com.gabikersul.ilegra.technicalchallenge.model.*;
 
 import java.nio.file.Path;
 import java.util.*;

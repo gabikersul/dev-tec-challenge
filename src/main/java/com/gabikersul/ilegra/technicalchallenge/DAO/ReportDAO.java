@@ -1,8 +1,8 @@
-package DAO;
+package com.gabikersul.ilegra.technicalchallenge.DAO;
 
 import com.google.gson.GsonBuilder;
-import exception.FileException;
-import model.Report;
+import com.gabikersul.ilegra.technicalchallenge.exception.FileException;
+import com.gabikersul.ilegra.technicalchallenge.model.Report;
 import com.google.gson.Gson;
 import java.io.FileWriter;
 import java.io.IOException;

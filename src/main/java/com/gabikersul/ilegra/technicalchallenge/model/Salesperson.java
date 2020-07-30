@@ -1,4 +1,4 @@
-package model;
+package com.gabikersul.ilegra.technicalchallenge.model;
 
 public class Salesperson implements  Comparable<Salesperson>{
 

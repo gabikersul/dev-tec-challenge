@@ -1,6 +1,6 @@
-package DAO;
+package com.gabikersul.ilegra.technicalchallenge.DAO;
 
-import exception.FileException;
+import com.gabikersul.ilegra.technicalchallenge.exception.FileException;
 
 import java.io.IOException;
 import java.nio.file.Files;

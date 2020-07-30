@@ -1,9 +1,11 @@
-import DAO.ImportDAO;
-import handler.DataHandler;
-import model.Client;
-import model.Sale;
-import model.Salesperson;
-import service.Service;
+package com.gabikersul.ilegra.technicalchallenge;
+
+import com.gabikersul.ilegra.technicalchallenge.DAO.ImportDAO;
+import com.gabikersul.ilegra.technicalchallenge.handler.DataHandler;
+import com.gabikersul.ilegra.technicalchallenge.model.Client;
+import com.gabikersul.ilegra.technicalchallenge.model.Sale;
+import com.gabikersul.ilegra.technicalchallenge.model.Salesperson;
+import com.gabikersul.ilegra.technicalchallenge.service.Service;
 
 import java.util.List;
 import java.util.regex.Pattern;
