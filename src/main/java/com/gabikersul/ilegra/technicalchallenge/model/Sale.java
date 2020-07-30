@@ -17,16 +17,8 @@ public class Sale implements Comparable<Sale> {
         this.salespersonName = salespersonName;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
     public String getSaleID() {
         return saleID;
-    }
-
-    public void setSaleID(String saleID) {
-        this.saleID = saleID;
     }
 
     public List<Product> getProductList() {
@@ -39,10 +31,6 @@ public class Sale implements Comparable<Sale> {
 
     public String getSalespersonName() {
         return salespersonName;
-    }
-
-    public void setSalespersonName(String salespersonName) {
-        this.salespersonName = salespersonName;
     }
 
 

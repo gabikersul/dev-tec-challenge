@@ -18,32 +18,16 @@ public class Report {
         this.worstSalesperson = worstSalesperson;
     }
 
-    public Integer getQuantityOfClients() {
-        return quantityOfClients;
-    }
-
     public void setQuantityOfClients(Integer quantityOfClients) {
         this.quantityOfClients = quantityOfClients;
-    }
-
-    public Integer getQuantityOfSalespeople() {
-        return quantityOfSalespeople;
     }
 
     public void setQuantityOfSalespeople(Integer quantityOfSalespeople) {
         this.quantityOfSalespeople = quantityOfSalespeople;
     }
 
-    public String getBiggestSaleID() {
-        return biggestSaleID;
-    }
-
     public void setBiggestSaleID(String biggestSaleID) {
         this.biggestSaleID = biggestSaleID;
-    }
-
-    public Salesperson getWorstSalesperson() {
-        return worstSalesperson;
     }
 
     public void setWorstSalesperson(Salesperson worstSalesperson) {
