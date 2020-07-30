@@ -25,7 +25,7 @@ It's a Java + Gradle application that reads files and analysis the data and outp
     
     - The quantity of clients.
     - The quantity of salespeople.
-    - The best sale ID.
+    - ID of the most expensive sale.
     - The worst salesperson.
 
 
