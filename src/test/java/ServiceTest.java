@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportDAOTest {
+public class ServiceTest {
 
     private Service service;
     double delta = 0.0;

@@ -40,33 +40,34 @@ public class Service {
                 .max();
     }
 
-    public String getBestSaleID(List<Sale> sales){ //todo: pegar o id da melhor venda - só consigo pegar a melhor venda no metodo de cima
-        return null;
-    }
-
-    public OptionalDouble calculatePriceWorstSale(List<Sale> sales){ //todo: não está funcionando a lógica p/ pegar o pior vendedor
+    public String getBestSaleID(List<Sale> sales){
         if(sales.isEmpty()){
             throw new IllegalArgumentException("No sale registered.");
         }
-        return sales.stream()
-                .mapToDouble(sale -> sale.getProductList()
-                        .stream()
-                        .mapToDouble(Product::getProductTotalPrice)
-                        .sum())
-                .min();
+        Collections.sort(sales);
+        return sales.get(0).getSaleID();
     }
 
+    public Salesperson getWorstSalesperson(List<Sale> sales, List<Salesperson> salespeople){
+        if(sales.isEmpty()) {
+            throw new IllegalArgumentException("No sale registered.");
+        }
+        for (Sale sale : sales) {
+            salespeople.stream().filter(salesperson -> salesperson.getName()
+                    .equals(sale.getSalespersonName()))
+                    .forEach(Salesperson::incrementTotalSale);
+        }
+        Collections.sort(salespeople);
+        return salespeople.get(0);
+    }
 
-    public Report createReport(List<Client> clients, List<Salesperson> salespeople, List<Sale> sales, Salesperson worstSalesperson){
+    public boolean createReport(List<Client> clients, List<Salesperson> salespeople, List<Sale> sales, Path fileName){
         Integer quantityOfClients = calculateQuantityOfClients(clients);
         Integer quantityOfSalespeople = calculateQuantityOfSalespeople(salespeople);
-        List<Sale> sals = sales;
-        Collections.sort(sals, Sale::compareTo);
-        String bestSaleID = sals.get(0).getSaleID();
+        String bestSaleID = getBestSaleID(sales);
+        Salesperson worstSalesperson = getWorstSalesperson(sales, salespeople);
 
-
-        System.out.println("BEST SALEEEE "+bestSaleID);
-        return new Report(quantityOfClients, quantityOfSalespeople, bestSaleID, worstSalesperson);
+        return saveReport(new Report(quantityOfClients, quantityOfSalespeople, bestSaleID, worstSalesperson), fileName);
     }
 
     public boolean saveReport(Report report, Path fileName){

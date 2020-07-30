@@ -9,7 +9,6 @@ public class Sale implements Comparable<Sale> {
     private String saleID;
     private List<Product> productList;
     private String salespersonName;
-    private Double productTotalPrice;
 
     public Sale(){
 
@@ -49,9 +48,6 @@ public class Sale implements Comparable<Sale> {
         this.salespersonName = salespersonName;
     }
 
-    public Double getProductTotalPrice(){
-        return productTotalPrice;
-    }
 
     @Override
     public String toString() {
