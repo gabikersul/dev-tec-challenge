@@ -1,0 +1,12 @@
+{
+  "quantityOfClients": 4,
+  "quantityOfSalespeople": 2,
+  "biggestSaleID": "1",
+  "worstSalesperson": {
+    "identifier": "001",
+    "cpf": "130.889.026-51",
+    "name": "Pedro",
+    "salary": 5000.0,
+    "totalSales": 0
+  }
+}
